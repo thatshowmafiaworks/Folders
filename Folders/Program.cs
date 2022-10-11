@@ -1,7 +1,14 @@
+using Folders.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<FoldersContext>(options =>
+    options.UseSqlServer("workstation id=DBForTest.mssql.somee.com;packet size=4096;user id=MykolaOlizarenko_SQLLogin_1;pwd=h64vlbsytm;data source=DBForTest.mssql.somee.com;persist security info=False;initial catalog=DBForTest"));
+
 
 var app = builder.Build();
 
@@ -13,7 +20,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<FoldersContext>();
+
+    context.Database.EnsureCreated();
+    DbInitializer.Initialize(context);
+}
+
+    app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
