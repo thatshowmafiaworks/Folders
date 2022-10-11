@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Views\Folder\Root.cshtml" />
+    <None Include="Views\Folder\Folder.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

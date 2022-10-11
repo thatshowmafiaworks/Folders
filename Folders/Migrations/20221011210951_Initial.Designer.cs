@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Folders.Migrations
 {
     [DbContext(typeof(FoldersContext))]
-    [Migration("20221011171142_init")]
-    partial class init
+    [Migration("20221011210951_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,9 @@ namespace Folders.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("FolderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()

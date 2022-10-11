@@ -1,5 +1,6 @@
 ﻿using Folders.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,11 @@ namespace Folders.Controllers
             _context = context;
         }
 
-        public IActionResult Root()
-        {
-            var folders = _context.Folders.Where(x=> x.ParentId == -1).ToArray(); 
-            return View(folders);
-        }
 
-        public IActionResult Folder(int id)
+        public async Task<IActionResult> Folder(int id)
         {
+            var folder = await _context.Folders.FirstOrDefaultAsync(x => x.FolderId == id);
+            this.ViewData.Add("Folder", folder.Name);
             var folders = _context.Folders.Where(x => x.ParentId == id).ToArray();
             return View(folders);
         }

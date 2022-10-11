@@ -6,8 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+string connection = "workstation id=AAADBFolder.mssql.somee.com;packet size=4096;user id=MykolaOlizarenko_SQLLogin_1;pwd=h64vlbsytm;data source=AAADBFolder.mssql.somee.com;persist security info=False;initial catalog=AAADBFolder";
+
 builder.Services.AddDbContext<FoldersContext>(options =>
-    options.UseSqlServer("workstation id=DBForTest.mssql.somee.com;packet size=4096;user id=MykolaOlizarenko_SQLLogin_1;pwd=h64vlbsytm;data source=DBForTest.mssql.somee.com;persist security info=False;initial catalog=DBForTest"));
+    options.UseSqlServer(connection));
 
 
 var app = builder.Build();
@@ -26,6 +28,7 @@ using (var scope = app.Services.CreateScope())
 
     var context = services.GetRequiredService<FoldersContext>();
 
+    
     context.Database.EnsureCreated();
     DbInitializer.Initialize(context);
 }
