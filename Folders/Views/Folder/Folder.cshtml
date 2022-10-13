@@ -1,7 +1,21 @@
 ﻿@model Folder[]
 
 
-<h2>./@ViewData["Folder"]/</h2>
+@if (Int32.Parse(ViewData["FolderId"].ToString()) == 10){
+    <h2>./<a 
+        asp-controller="Folder" 
+        asp-action="Folder" 
+        asp-route-id="@ViewData["ParentId"]"
+        >@ViewData["ParentName"]</a>/
+    </h2>
+}else{
+    <h2>./<a 
+        asp-controller="Folder" 
+        asp-action="Folder" 
+        asp-route-id="@ViewData["ParentId"]"
+        >@ViewData["ParentName"]</a>/@ViewData["Folder"]/
+    </h2>
+}
 @if (Model.Any())
 {
     <div class="list-group">
@@ -17,5 +31,5 @@
     </div>
 }
 else{
-    <h4>Empty folder</h4>
+    <h4 class="list-group-item">Empty folder</h4>
 }

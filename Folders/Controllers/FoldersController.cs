@@ -19,10 +19,21 @@ namespace Folders.Controllers
         }
 
 
-        public async Task<IActionResult> Folder(int id)
+        public IActionResult Folder(int id)
         {
-            var folder = await _context.Folders.FirstOrDefaultAsync(x => x.FolderId == id);
+            var folder = _context.Folders.FirstOrDefault(x => x.FolderId == id);
             this.ViewData.Add("Folder", folder.Name);
+            this.ViewData.Add("FolderId", folder.Id);
+            var parent = _context.Folders.FirstOrDefault(x => x.FolderId == folder.ParentId);
+            if(parent != null) { 
+                this.ViewData.Add("ParentName", parent.Name);
+                this.ViewData.Add("ParentId", parent.FolderId);
+            }
+            else
+            {
+                this.ViewData.Add("ParentName", "root");
+                this.ViewData.Add("ParentId", 10);
+            }
             var folders = _context.Folders.Where(x => x.ParentId == id).ToArray();
             return View(folders);
         }
