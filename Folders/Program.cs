@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-string connection = "workstation id=AAADBFolder.mssql.somee.com;packet size=4096;user id=MykolaOlizarenko_SQLLogin_1;pwd=h64vlbsytm;data source=AAADBFolder.mssql.somee.com;persist security info=False;initial catalog=AAADBFolder";
+string connection = "ConnectionString";
 
 builder.Services.AddDbContext<FoldersContext>(options =>
     options.UseSqlServer(connection));
